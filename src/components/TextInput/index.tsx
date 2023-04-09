@@ -8,6 +8,7 @@ export type ITextInputProps = TextInputProps &
 
 export const TextInput = ({
   type = 'default',
+  error,
   label,
   ...props
 }: ITextInputProps) => {
@@ -16,7 +17,7 @@ export const TextInput = ({
   return (
     <>
       {labelExists && <Label>{label}</Label>}
-      <CustomTextInput type={type} {...props} />
+      <CustomTextInput error={error} type={type} {...props} />
     </>
   )
 }

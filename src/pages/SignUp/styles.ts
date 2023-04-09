@@ -11,7 +11,7 @@ export const Content = styled.View`
   background: ${(props) => props.theme.colors.white};
   padding: 24px;
   border-radius: 16px;
-  gap: 24px;
+  gap: 16px;
 `
 
 export const Header = styled.View``
@@ -27,7 +27,7 @@ export const Wrapper = styled.View`
 `
 
 export const Body = styled.View`
-  gap: 8px;
+  gap: 2px;
   color: ${(props) => props.theme.colors['text-base']};
   font-size: 16px;
 `

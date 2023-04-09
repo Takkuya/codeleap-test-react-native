@@ -47,7 +47,6 @@ export const ContentHeader = styled.View`
   flex-direction: row;
   justify-content: space-between;
   width: 100%;
-  gap: 100px;
 `
 
 export const User = styled.Text`

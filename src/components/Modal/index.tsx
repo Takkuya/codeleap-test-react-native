@@ -21,7 +21,7 @@ export const CustomModal = ({
 
   return (
     <View>
-      <Modal isVisible={isModalOpen}>
+      <Modal isVisible={isModalOpen} onBackdropPress={handleIsModalOpen}>
         <ModalContainer>
           <Header>
             <Title>{title}</Title>

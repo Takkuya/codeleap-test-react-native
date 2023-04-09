@@ -8,8 +8,33 @@ import {
   CreateNewPostContainer,
   Footer
 } from './styles'
+import { useAppDispatch, useAppSelector } from '../../redux/store'
+import { useState } from 'react'
+import { postCardItems } from '../../redux/itemsSlice'
+import { ParamListBase, useNavigation } from '@react-navigation/native'
+import { StackNavigationProp } from '@react-navigation/stack'
 
 export const CreateNewPost = () => {
+  const [cardTitle, setCardTitle] = useState('')
+  const [cardContent, setCardContent] = useState('')
+
+  const navigation = useNavigation<StackNavigationProp<ParamListBase>>()
+  const dispatch = useAppDispatch()
+  const userState = useAppSelector((store) => store.user)
+
+  function handleCreateNewItem() {
+    dispatch(
+      postCardItems({
+        itemUsername: userState.value,
+        itemTitle: cardTitle,
+        itemContent: cardContent
+      })
+    )
+    setCardTitle('')
+    setCardContent('')
+    navigation.navigate('Home')
+  }
+
   return (
     <CreateNewPostContainer>
       <Header>
@@ -17,7 +42,11 @@ export const CreateNewPost = () => {
       </Header>
       <Content>
         <View>
-          <TextInput placeholder="John doe" label="Title" />
+          <TextInput
+            placeholder="John doe"
+            label="Title"
+            onChangeText={(value) => setCardTitle(value)}
+          />
         </View>
         <View>
           <TextInput
@@ -25,11 +54,16 @@ export const CreateNewPost = () => {
             placeholder="Content Here"
             label="Content"
             multiline={true}
+            onChangeText={(value) => setCardContent(value)}
           />
         </View>
       </Content>
       <Footer>
-        <Button type={'default'} variant={'primary'}>
+        <Button
+          type={'default'}
+          variant={'primary'}
+          onPress={handleCreateNewItem}
+        >
           Create
         </Button>
       </Footer>

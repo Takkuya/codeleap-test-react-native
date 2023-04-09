@@ -23,10 +23,17 @@ export const ButtonWrapper = styled(Pressable).attrs(
       }
     } as PressableProps)
 )<VariantProps>`
-  background: ${(props) =>
-    props.type === 'outline'
-      ? 'transparent'
-      : props.theme.colors[props.variant]};
+  background: ${(props) => {
+    if (props.type === 'outline') {
+      return 'transparent'
+    }
+
+    if (props.disabled) {
+      return props.theme.colors.gray300
+    }
+
+    return props.theme.colors[props.variant]
+  }};
 
   border: 1px solid
     ${(props) =>
@@ -42,7 +49,7 @@ export const ButtonWrapper = styled(Pressable).attrs(
 `
 export const ButtonText = styled(Text)<VariantProps>`
   font-family: ${(props) => props.theme.fonts.bold};
-  font-size: 14px;
+  font-size: 16px;
 
   color: ${(props) =>
     props.type === 'default'

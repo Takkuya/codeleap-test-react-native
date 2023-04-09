@@ -39,6 +39,7 @@ export const Body = styled.FlatList`
   height: 100%;
 
   flex: 1;
+  padding-bottom: 32px;
 `
 
 export const StickButton = styled.View`

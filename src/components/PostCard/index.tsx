@@ -14,16 +14,30 @@ import { useState } from 'react'
 import { Icon } from '../Icon'
 import { DeleteItemModal } from '../DeleteItemModal'
 import { EditItemModal } from '../EditItemModal'
+import { TimesPassed } from '../../utils/TimesPassed'
+import { useAppSelector } from '../../redux/store'
 
 type PostCardProps = {
+  id: string
   title: string
-  user: string
+  username: string
+  created_datetime: string
   content: string
 }
 
-export const PostCard = ({ title, user, content }: PostCardProps) => {
+export const PostCard = ({
+  id,
+  title,
+  username,
+  created_datetime,
+  content
+}: PostCardProps) => {
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false)
   const [isEditModalOpen, setIsEditModalOpen] = useState(false)
+
+  const userState = useAppSelector((state) => state.user)
+
+  const isUserTheAuthor = userState.value === username
 
   function handleIsDeleteOpenModal() {
     setIsDeleteModalOpen(!isDeleteModalOpen)
@@ -38,26 +52,28 @@ export const PostCard = ({ title, user, content }: PostCardProps) => {
       <PostCardContainer>
         <Header>
           <Title>{title}</Title>
-          <IconsContainer>
-            <Icon
-              name="trash-2"
-              size={20}
-              color={'white'}
-              onPress={handleIsDeleteOpenModal}
-            />
-            <Icon
-              name="edit"
-              size={20}
-              color={'white'}
-              onPress={handleIsEditOpenModal}
-            />
-          </IconsContainer>
+          {isUserTheAuthor && (
+            <IconsContainer>
+              <Icon
+                name="trash-2"
+                size={20}
+                color={'white'}
+                onPress={handleIsDeleteOpenModal}
+              />
+              <Icon
+                name="edit"
+                size={20}
+                color={'white'}
+                onPress={handleIsEditOpenModal}
+              />
+            </IconsContainer>
+          )}
         </Header>
 
         <Content>
           <ContentHeader>
-            <User>@{user}</User>
-            <TimePassed>25 minutes ago</TimePassed>
+            <User>@{username}</User>
+            <TimePassed>{TimesPassed(created_datetime)}</TimePassed>
           </ContentHeader>
           <ContentBody>
             <Paragraph>{content}</Paragraph>
@@ -66,12 +82,16 @@ export const PostCard = ({ title, user, content }: PostCardProps) => {
       </PostCardContainer>
 
       <DeleteItemModal
+        itemId={id}
         isOpen={isDeleteModalOpen}
         setIsOpen={setIsDeleteModalOpen}
         toggleIsModalOpen={handleIsDeleteOpenModal}
       />
 
       <EditItemModal
+        itemId={id}
+        itemTitle={title}
+        itemContent={content}
         isOpen={isEditModalOpen}
         setIsOpen={setIsEditModalOpen}
         toggleIsModalOpen={handleIsEditOpenModal}

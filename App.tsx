@@ -1,7 +1,5 @@
 import 'react-native-gesture-handler'
 import { ThemeProvider } from 'styled-components'
-import { Text } from 'react-native'
-
 import {
   useFonts,
   Roboto_700Bold,
@@ -13,6 +11,9 @@ import { NavigationContainer } from '@react-navigation/native'
 import { createStackNavigator } from '@react-navigation/stack'
 import { Home } from './src/pages/Home'
 import { CreateNewPost } from './src/pages/CreateNewPost'
+import { Provider } from 'react-redux'
+import store from './src/redux/store'
+import { Loading } from './src/components/Loading'
 
 export default function App() {
   const [fontsLoaded] = useFonts({
@@ -20,47 +21,45 @@ export default function App() {
     Roboto_400Regular
   })
 
-  const Stack = createStackNavigator()
-
   if (!fontsLoaded) {
-    return (
-      <Text style={{ color: '#000' }}>
-        Carregando mudar isso depois lembra Placeholder
-      </Text>
-    )
+    return <Loading />
   }
+
+  const Stack = createStackNavigator()
 
   return (
     <ThemeProvider theme={theme}>
-      <NavigationContainer>
-        <Stack.Navigator>
-          <Stack.Screen
-            name="SignUp"
-            component={SignUp}
-            options={{ headerShown: false }}
-          />
-          <Stack.Screen
-            name="Home"
-            component={Home}
-            options={{ headerShown: false }}
-          />
-          <Stack.Screen
-            name="NewPost"
-            component={CreateNewPost}
-            options={{
-              title: 'New Post',
-              headerStyle: {
-                backgroundColor: theme.colors.primary
-              },
-              headerTitleStyle: {
-                color: theme.colors.white,
-                fontFamily: theme.fonts.regular
-              },
-              headerTintColor: theme.colors.white
-            }}
-          />
-        </Stack.Navigator>
-      </NavigationContainer>
+      <Provider store={store}>
+        <NavigationContainer>
+          <Stack.Navigator>
+            <Stack.Screen
+              name="SignUp"
+              component={SignUp}
+              options={{ headerShown: false }}
+            />
+            <Stack.Screen
+              name="Home"
+              component={Home}
+              options={{ headerShown: false }}
+            />
+            <Stack.Screen
+              name="NewPost"
+              component={CreateNewPost}
+              options={{
+                title: 'New Post',
+                headerStyle: {
+                  backgroundColor: theme.colors.primary
+                },
+                headerTitleStyle: {
+                  color: theme.colors.white,
+                  fontFamily: theme.fonts.regular
+                },
+                headerTintColor: theme.colors.white
+              }}
+            />
+          </Stack.Navigator>
+        </NavigationContainer>
+      </Provider>
     </ThemeProvider>
   )
 }
