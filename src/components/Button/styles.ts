@@ -36,10 +36,17 @@ export const ButtonWrapper = styled(Pressable).attrs(
   }};
 
   border: 1px solid
-    ${(props) =>
-      props.type === 'outline'
-        ? props.theme.colors.gray300
-        : props.theme.colors[props.variant]};
+    ${(props) => {
+      if (props.type === 'outline') {
+        return props.theme.colors.gray300
+      }
+
+      if (props.disabled) {
+        return props.theme.colors.gray300
+      }
+
+      return props.theme.colors[props.variant]
+    }};
 
   border-radius: 8px;
 

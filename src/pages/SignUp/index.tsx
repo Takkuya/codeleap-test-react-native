@@ -1,7 +1,6 @@
 import { ParamListBase, useNavigation } from '@react-navigation/native'
 import { StackNavigationProp } from '@react-navigation/stack'
 import { useEffect, useState } from 'react'
-// import { Pressable, Text } from 'react-native'
 import { Button } from '../../components/Button'
 import { TextInput } from '../../components/TextInput'
 import { useAppDispatch } from '../../redux/store'
@@ -20,6 +19,8 @@ import {
 export const SignUp = () => {
   const navigation = useNavigation<StackNavigationProp<ParamListBase>>()
   const [username, setUsername] = useState('')
+
+  const isUsernameEmpty = username.trim().length < 1
 
   async function getUsernameFromStorage() {
     const username = await AsyncStorage.getItem('username')
@@ -52,6 +53,8 @@ export const SignUp = () => {
             <TextInput
               placeholder="John doe"
               label="Please enter your username"
+              multiline={true}
+              maxLength={255}
               value={username}
               onChangeText={(value) => setUsername(value)}
             />
@@ -61,7 +64,7 @@ export const SignUp = () => {
               type={'default'}
               variant={'primary'}
               onPress={handleUsername}
-              disabled={username.trim().length < 1}
+              disabled={isUsernameEmpty}
             >
               ENTER
             </Button>

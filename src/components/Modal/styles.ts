@@ -3,6 +3,7 @@ import styled from 'styled-components/native'
 export const ModalContainer = styled.View`
   background: ${(props) => props.theme.colors.white};
   border-radius: 16px;
+  margin: 50px 0;
 `
 
 export const Header = styled.View`

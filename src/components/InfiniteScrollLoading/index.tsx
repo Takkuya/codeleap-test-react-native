@@ -1,6 +1,6 @@
 import { ActivityIndicator, View } from 'react-native'
-import theme from '../global/styles/theme'
-import { useAppSelector } from '../redux/store'
+import theme from '../../global/styles/theme'
+import { useAppSelector } from '../../redux/store'
 import { Container, NoMorePostsContainer, Paragraph } from './styles'
 
 type InfiniteScrollLoading = {

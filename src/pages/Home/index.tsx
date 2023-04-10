@@ -1,4 +1,4 @@
-import { SafeAreaView, StatusBar } from 'react-native'
+import { RefreshControl, SafeAreaView, StatusBar } from 'react-native'
 import { ParamListBase, useNavigation } from '@react-navigation/native'
 import { StackNavigationProp } from '@react-navigation/stack'
 import {
@@ -15,10 +15,10 @@ import { PostCard } from '../../components/PostCard'
 import { Icon } from '../../components/Icon'
 import { useCallback, useRef, useState } from 'react'
 import { useEffect } from 'react'
-import { InfiniteScrollLoading } from '../../InfiniteScrollLoading'
+import { InfiniteScrollLoading } from '../../components/InfiniteScrollLoading'
 import { useAppDispatch, useAppSelector } from '../../redux/store'
 import { Loading } from '../../components/Loading'
-import { loadCardItems } from '../../redux/itemsSlice'
+import { getCardItems, loadCardItems } from '../../redux/itemsSlice'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 
 export const Home = () => {
@@ -28,6 +28,7 @@ export const Home = () => {
   const loading = useAppSelector((store) => store.items.loading)
 
   const [isPostsLoading, setIsPostsLoading] = useState(false)
+  const [refreshing, setRefreshing] = useState(false)
   const postsLoadingRef = useRef(false)
 
   const navigation = useNavigation<StackNavigationProp<ParamListBase>>()
@@ -43,6 +44,12 @@ export const Home = () => {
     postsLoadingRef.current = false
     setIsPostsLoading(false)
   }, [items.length])
+
+  async function getPostsPullToRefresh() {
+    setRefreshing(true)
+    await dispatch(getCardItems())
+    setRefreshing(false)
+  }
 
   async function removeUserFromStorage() {
     await AsyncStorage.removeItem('username')
@@ -84,6 +91,12 @@ export const Home = () => {
           getItem={(data, index) => data[index]}
           getItemCount={(data) => data.length}
           keyExtractor={(item: any) => String(item.id)}
+          refreshControl={
+            <RefreshControl
+              refreshing={refreshing}
+              onRefresh={getPostsPullToRefresh}
+            />
+          }
           renderItem={({ item }: { item: any }) => (
             <PostCard
               id={item.id}

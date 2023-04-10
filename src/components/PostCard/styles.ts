@@ -1,4 +1,3 @@
-import { Pressable } from 'react-native'
 import styled from 'styled-components/native'
 
 export const PostCardContainer = styled.View`
@@ -53,6 +52,7 @@ export const User = styled.Text`
   font-family: ${(props) => props.theme.fonts.bold};
   color: ${(props) => props.theme.colors.gray600};
   font-size: 16px;
+  flex-shrink: 1;
 `
 export const TimePassed = styled.Text`
   font-family: ${(props) => props.theme.fonts.regular};

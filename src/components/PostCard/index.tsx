@@ -10,12 +10,15 @@ import {
   TimePassed,
   Paragraph
 } from './styles'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Icon } from '../Icon'
 import { DeleteItemModal } from '../DeleteItemModal'
 import { EditItemModal } from '../EditItemModal'
 import { TimesPassed } from '../../utils/TimesPassed'
 import { useAppSelector } from '../../redux/store'
+import AsyncStorage from '@react-native-async-storage/async-storage'
+import { ParamListBase, useNavigation } from '@react-navigation/native'
+import { StackNavigationProp } from '@react-navigation/stack'
 
 type PostCardProps = {
   id: string
@@ -32,12 +35,23 @@ export const PostCard = ({
   created_datetime,
   content
 }: PostCardProps) => {
+  const navigation = useNavigation<StackNavigationProp<ParamListBase>>()
+
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false)
   const [isEditModalOpen, setIsEditModalOpen] = useState(false)
 
-  const userState = useAppSelector((state) => state.user)
+  const [usernameStorage, setUsernameStorage] = useState('')
 
-  const isUserTheAuthor = userState.value === username
+  async function getUsernameFromStorage() {
+    const username = await AsyncStorage.getItem('username')
+    if (!username) {
+      navigation.navigate('SignUp')
+    } else {
+      setUsernameStorage(username)
+    }
+  }
+
+  const isUserTheAuthor = usernameStorage === username
 
   function handleIsDeleteOpenModal() {
     setIsDeleteModalOpen(!isDeleteModalOpen)
@@ -46,6 +60,10 @@ export const PostCard = ({
   function handleIsEditOpenModal() {
     setIsEditModalOpen(!isEditModalOpen)
   }
+
+  useEffect(() => {
+    getUsernameFromStorage()
+  }, [])
 
   return (
     <>

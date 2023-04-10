@@ -42,10 +42,15 @@ export const Body = styled(VirtualizedList)`
 export const StickButton = styled.View`
   position: absolute;
   align-self: flex-end;
-  right: 30px;
+  right: 20px;
   bottom: 30px;
   background: ${(props) => props.theme.colors.primary};
-  z-index: 9999;
+  z-index: 999;
 
   border-radius: 50px;
+  elevation: 3;
+  shadow-color: #000;
+  shadow-offset: 0px 2px;
+  shadow-opacity: 0.23;
+  shadow-radius: 2.62px;
 `

@@ -19,6 +19,9 @@ export const CreateNewPost = () => {
   const [cardTitle, setCardTitle] = useState('')
   const [cardContent, setCardContent] = useState('')
 
+  const isCardTitleEmpty = cardTitle.trim().length < 1
+  const isCardContentEmpty = cardContent.trim().length < 1
+
   const navigation = useNavigation<StackNavigationProp<ParamListBase>>()
   const dispatch = useAppDispatch()
 
@@ -47,10 +50,12 @@ export const CreateNewPost = () => {
         <Title>What’s on your mind?</Title>
       </Header>
       <Content>
-        <View>
+        <View style={{ paddingTop: 12 }}>
           <TextInput
             placeholder="John doe"
             label="Title"
+            multiline={true}
+            maxLength={255}
             onChangeText={(value) => setCardTitle(value)}
           />
         </View>
@@ -60,6 +65,7 @@ export const CreateNewPost = () => {
             placeholder="Content Here"
             label="Content"
             multiline={true}
+            maxLength={255}
             onChangeText={(value) => setCardContent(value)}
           />
         </View>
@@ -69,9 +75,7 @@ export const CreateNewPost = () => {
           type={'default'}
           variant={'primary'}
           onPress={handleCreateNewItem}
-          disabled={
-            cardTitle.trim().length < 1 || cardContent.trim().length < 1
-          }
+          disabled={isCardTitleEmpty || isCardContentEmpty}
         >
           Create
         </Button>

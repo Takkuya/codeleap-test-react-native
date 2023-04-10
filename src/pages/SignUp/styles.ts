@@ -9,7 +9,7 @@ export const SignUpContainer = styled.View`
 
 export const Content = styled.View`
   background: ${(props) => props.theme.colors.white};
-  padding: 24px;
+  padding: 20px;
   border-radius: 16px;
   gap: 16px;
 `
