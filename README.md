@@ -3,22 +3,13 @@ p# Junior Frontend Engineer Test - Codeleap
 Coding test for the Junior Frontend Engineer position at Codeleap, made using React Native with Expo.
 
 ## 📱 Screenshots
-
-- Sign Up
-  ![Sign Up Page](.github/signup.jpg)
-  <br/>
-- List Posts
-  ![List Posts Page](.github/posts.jpg)
-  <br/>
-- New Post
-  ![New Post Page](.github/newpost.jpg)
-  <br/>
-  ![Edit Item Modal](.github/edititem.jpg)
-- Edit Item Modal
-  <br/>
-- Delete Item Modal
-  ![Delete Item Modal](.github/deleteitem.jpg)
-
+ <p align="center">
+<img width=200px height=50% src=".github/signup.jpg" alt="Sign Up Page">
+<img width=200px height=50% src=".github/posts.jpg" alt="List Posts Page">
+<img width=200px height=50% src=".github/newpost.jpg" alt="New Post Page">
+<img width=200px height=50% src=".github/edititem.jpg" alt="Edit Item Modal">
+<img width=200px height=50% src=".github/deleteitem.jpg" alt="Delete Item Modal">
+</p>
 ## ⚙️ Installation and Setup
 
 To install and run the app, follow these steps:
