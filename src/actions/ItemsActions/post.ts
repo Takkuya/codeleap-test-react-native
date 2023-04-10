@@ -11,6 +11,8 @@ export const postItems = async ({
   itemTitle,
   itemContent
 }: PostItemsData) => {
+  console.log('sla mano', itemUsername)
+
   try {
     const response = await api.post('/', {
       username: itemUsername,

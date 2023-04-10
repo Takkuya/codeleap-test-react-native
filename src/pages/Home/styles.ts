@@ -1,4 +1,4 @@
-import { Pressable } from 'react-native'
+import { Pressable, VirtualizedList } from 'react-native'
 import styled from 'styled-components/native'
 
 export const HomeContainer = styled.View`
@@ -34,7 +34,7 @@ export const LogoutButton = styled(Pressable).attrs((props) => ({
   border-radius: 6px;
 `
 
-export const Body = styled.FlatList`
+export const Body = styled(VirtualizedList)`
   gap: 24px;
   height: 100%;
 

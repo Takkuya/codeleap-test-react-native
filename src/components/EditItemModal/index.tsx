@@ -34,8 +34,8 @@ export const EditItemModal = ({
   async function handleEditItem() {
     await editItems({
       itemId,
-      itemTitle: cardTitle,
-      itemContent: cardContent
+      itemTitle: cardTitle.trim(),
+      itemContent: cardContent.trim()
     })
     await dispatch(getCardItems())
     setIsOpen(false)
@@ -74,6 +74,9 @@ export const EditItemModal = ({
             type={'outline'}
             variant={'primary'}
             onPress={toggleIsModalOpen}
+            disabled={
+              cardTitle.trim().length < 1 || cardContent.trim().length < 1
+            }
           >
             Cancel
           </Button>

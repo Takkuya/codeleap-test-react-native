@@ -8,11 +8,12 @@ import {
   CreateNewPostContainer,
   Footer
 } from './styles'
-import { useAppDispatch, useAppSelector } from '../../redux/store'
+import { useAppDispatch } from '../../redux/store'
 import { useState } from 'react'
 import { postCardItems } from '../../redux/itemsSlice'
 import { ParamListBase, useNavigation } from '@react-navigation/native'
 import { StackNavigationProp } from '@react-navigation/stack'
+import AsyncStorage from '@react-native-async-storage/async-storage'
 
 export const CreateNewPost = () => {
   const [cardTitle, setCardTitle] = useState('')
@@ -20,14 +21,19 @@ export const CreateNewPost = () => {
 
   const navigation = useNavigation<StackNavigationProp<ParamListBase>>()
   const dispatch = useAppDispatch()
-  const userState = useAppSelector((store) => store.user)
 
-  function handleCreateNewItem() {
+  async function handleCreateNewItem() {
+    const username = await AsyncStorage.getItem('username')
+
+    if (!username) {
+      return navigation.navigate('SignUp')
+    }
+
     dispatch(
       postCardItems({
-        itemUsername: userState.value,
-        itemTitle: cardTitle,
-        itemContent: cardContent
+        itemUsername: username,
+        itemTitle: cardTitle.trim(),
+        itemContent: cardContent.trim()
       })
     )
     setCardTitle('')
@@ -63,6 +69,9 @@ export const CreateNewPost = () => {
           type={'default'}
           variant={'primary'}
           onPress={handleCreateNewItem}
+          disabled={
+            cardTitle.trim().length < 1 || cardContent.trim().length < 1
+          }
         >
           Create
         </Button>
