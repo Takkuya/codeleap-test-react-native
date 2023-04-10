@@ -6,7 +6,10 @@ export const loadInfiniteScrollPosts = async (offset: number) => {
   try {
     const response = await api.get(`/?limit=${postsPerPage}&offset=${offset}`)
 
-    return response.data.results
+    return {
+      responseCount: response.data.count,
+      responseResults: response.data.results
+    }
   } catch (err) {
     console.error(err)
   }

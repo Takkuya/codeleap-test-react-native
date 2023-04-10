@@ -13,7 +13,7 @@ type IValue = {
   content: string
 }
 
-const initialState = { value: [] as IValue[], loading: true }
+const initialState = { value: [] as IValue[], postsCount: 0, loading: true }
 
 type PostCardItemsProps = {
   itemUsername: string
@@ -30,7 +30,8 @@ export const itemsSlice = createSlice({
       state.loading = false
     },
     loadPosts: (state, action) => {
-      state.value = [...state.value, ...action.payload]
+      state.value = [...state.value, ...action.payload.responseResults]
+      state.postsCount = action.payload?.responseCount
       state.loading = false
     },
     post: (state, action) => {
@@ -51,12 +52,6 @@ export const loadCardItems =
     const items = await loadInfiniteScrollPosts(offset)
     dispatch(loadPosts(items))
   }
-
-// export const getCardItemsInfiniteScroll =
-//   (offset: number) => async (dispatch: AppDispatch) => {
-//     const items = await getItemsInfiniteScroll(offset)
-//     dispatch(getInfiniteScrollItems(items))
-//   }
 
 export const postCardItems =
   ({ itemUsername, itemTitle, itemContent }: PostCardItemsProps) =>

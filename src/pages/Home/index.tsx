@@ -96,7 +96,10 @@ export const Home = () => {
           onEndReached={listPosts}
           onEndReachedThreshold={0.1}
           ListFooterComponent={
-            <InfiniteScrollLoading loading={isPostsLoading} />
+            <InfiniteScrollLoading
+              itemsLength={items.length}
+              loading={isPostsLoading}
+            />
           }
         />
         <StickButton>
