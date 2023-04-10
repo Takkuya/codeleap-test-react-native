@@ -23,7 +23,6 @@ export const SignUp = () => {
 
   async function getUsernameFromStorage() {
     const username = await AsyncStorage.getItem('username')
-    console.log('username', username)
     if (username) {
       navigation.navigate('Home')
     }

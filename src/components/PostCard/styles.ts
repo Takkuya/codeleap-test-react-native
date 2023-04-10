@@ -2,7 +2,7 @@ import { Pressable } from 'react-native'
 import styled from 'styled-components/native'
 
 export const PostCardContainer = styled.View`
-  padding: 20px 16px 0 16px;
+  padding: 20px 20px 0 20px;
 `
 
 export const Header = styled.View`

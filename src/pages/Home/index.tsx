@@ -1,4 +1,4 @@
-import { Pressable, SafeAreaView, StatusBar, Text } from 'react-native'
+import { SafeAreaView, StatusBar } from 'react-native'
 import { ParamListBase, useNavigation } from '@react-navigation/native'
 import { StackNavigationProp } from '@react-navigation/stack'
 import {
@@ -18,54 +18,31 @@ import { useEffect } from 'react'
 import { InfiniteScrollLoading } from '../../InfiniteScrollLoading'
 import { useAppDispatch, useAppSelector } from '../../redux/store'
 import { Loading } from '../../components/Loading'
-import { loadInfiniteScrollPosts } from '../../actions/ItemsActions/loadInfiniteScrollPosts'
-import { getCardItems, loadCardItems, loadPosts } from '../../redux/itemsSlice'
+import { loadCardItems } from '../../redux/itemsSlice'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 
 export const Home = () => {
   const dispatch = useAppDispatch()
 
   const items = useAppSelector((store) => store.items.value)
-  // const offset = useAppSelector((store) => store.items.offset)
   const loading = useAppSelector((store) => store.items.loading)
-  // const userState = useAppSelector((store) => store.user)
 
-  // const [posts, setPosts] = useState([])
   const [isPostsLoading, setIsPostsLoading] = useState(false)
   const postsLoadingRef = useRef(false)
-
-  const [offset, setOffset] = useState(0)
 
   const navigation = useNavigation<StackNavigationProp<ParamListBase>>()
 
   const listPosts = useCallback(async () => {
-    if (postsLoadingRef.current || isPostsLoading) {
+    if (postsLoadingRef.current) {
       return
     }
 
     postsLoadingRef.current = true
     setIsPostsLoading(true)
-    dispatch(loadCardItems(offset))
-    setOffset((previousOffset) => previousOffset + 10)
+    dispatch(loadCardItems(items.length))
     postsLoadingRef.current = false
     setIsPostsLoading(false)
-  }, [dispatch])
-
-  // async function listPosts() {
-  //   if (postsLoadingRef.current) {
-  //     return
-  //   }
-
-  //   postsLoadingRef.current = true
-  //   setIsPostsLoading(true)
-  //   const response = await api.get(`?limit=${postsPerPage}&offset=${offset}`)
-
-  //   setPosts([...posts, ...response.data.results])
-  //   setOffset((previousOffset) => previousOffset + 10)
-  //   postsLoadingRef.current = false
-  //   setIsPostsLoading(false)
-  //   setLoading(false)
-  // }
+  }, [items.length])
 
   async function removeUserFromStorage() {
     await AsyncStorage.removeItem('username')
@@ -73,7 +50,7 @@ export const Home = () => {
   }
 
   useEffect(() => {
-    dispatch(getCardItems())
+    listPosts()
   }, [])
 
   if (loading == true) {
@@ -101,11 +78,7 @@ export const Home = () => {
             </LogoutButton>
           </IconWrapper>
         </Header>
-        <Pressable onPress={listPosts}>
-          <Text>asdadadasdassdadasdasasdasd</Text>
-        </Pressable>
         <Body
-          contentContainerStyle={{ paddingBottom: 32 }}
           data={items}
           keyboardShouldPersistTaps="handled"
           getItem={(data, index) => data[index]}

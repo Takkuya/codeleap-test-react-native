@@ -30,8 +30,8 @@ export const itemsSlice = createSlice({
       state.loading = false
     },
     loadPosts: (state, action) => {
-      ;(state.value = [...state.value, ...action.payload]),
-        (state.loading = false)
+      state.value = [...state.value, ...action.payload]
+      state.loading = false
     },
     post: (state, action) => {
       state.value.concat(action.payload)

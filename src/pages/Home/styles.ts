@@ -30,16 +30,13 @@ export const LogoutButton = styled(Pressable).attrs((props) => ({
     borderless: true
   }
 }))`
-  padding: 4px;
   border-radius: 6px;
 `
 
 export const Body = styled(VirtualizedList)`
   gap: 24px;
   height: 100%;
-
   flex: 1;
-  padding-bottom: 32px;
 `
 
 export const StickButton = styled.View`
