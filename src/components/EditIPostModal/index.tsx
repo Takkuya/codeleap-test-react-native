@@ -1,46 +1,46 @@
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { View } from 'react-native'
 import { ScrollView } from 'react-native-gesture-handler'
-import { editItems } from '../../actions/ItemsActions/edit'
-import { getCardItems } from '../../redux/itemsSlice'
+import { editPost } from '../../actions/PostsActions/edit'
+import { getPostData } from '../../redux/postsSlice'
 import { useAppDispatch } from '../../redux/store'
 import { Button } from '../Button'
 import { CustomModal } from '../Modal'
 import { TextInput } from '../TextInput'
 import { BodyModal, FooterModal } from './styles'
 
-type EditModalProps = {
-  itemId: string
-  itemTitle: string
-  itemContent: string
+type EditPostModalProps = {
+  postId: string
+  postTitle: string
+  postContent: string
   isOpen: boolean
   setIsOpen: React.Dispatch<React.SetStateAction<boolean>>
   toggleIsModalOpen: () => void
 }
 
-export const EditItemModal = ({
-  itemId,
-  itemTitle,
-  itemContent,
+export const EditPostModal = ({
+  postId,
+  postTitle,
+  postContent,
   isOpen,
   setIsOpen,
   toggleIsModalOpen
-}: EditModalProps) => {
+}: EditPostModalProps) => {
   const dispatch = useAppDispatch()
 
-  const [cardTitle, setCardTitle] = useState(itemTitle)
-  const [cardContent, setCardContent] = useState(itemContent)
+  const [cardTitle, setCardTitle] = useState(postTitle)
+  const [cardContent, setCardContent] = useState(postContent)
 
   const isCardTitleEmpty = cardTitle.trim().length < 1
   const isCardContentEmpty = cardContent.trim().length < 1
 
-  async function handleEditItem() {
-    await editItems({
-      itemId,
-      itemTitle: cardTitle.trim(),
-      itemContent: cardContent.trim()
+  async function handleEditPost() {
+    await editPost({
+      postId,
+      postTitle: cardTitle.trim(),
+      postContent: cardContent.trim()
     })
-    await dispatch(getCardItems())
+    await dispatch(getPostData())
     setIsOpen(false)
   }
 
@@ -74,25 +74,25 @@ export const EditItemModal = ({
             />
           </View>
         </BodyModal>
-
-        <FooterModal>
-          <Button
-            type={'outline'}
-            variant={'primary'}
-            onPress={toggleIsModalOpen}
-          >
-            Cancel
-          </Button>
-          <Button
-            type={'default'}
-            variant={'success'}
-            onPress={handleEditItem}
-            disabled={isCardTitleEmpty || isCardContentEmpty}
-          >
-            Save
-          </Button>
-        </FooterModal>
       </ScrollView>
+
+      <FooterModal>
+        <Button
+          type={'outline'}
+          variant={'primary'}
+          onPress={toggleIsModalOpen}
+        >
+          Cancel
+        </Button>
+        <Button
+          type={'default'}
+          variant={'success'}
+          onPress={handleEditPost}
+          disabled={isCardTitleEmpty || isCardContentEmpty}
+        >
+          Save
+        </Button>
+      </FooterModal>
     </CustomModal>
   )
 }

@@ -14,6 +14,8 @@ import { CreateNewPost } from './src/pages/CreateNewPost'
 import { Provider } from 'react-redux'
 import store from './src/redux/store'
 import { Loading } from './src/components/Loading'
+import { Text } from 'react-native'
+import AsyncStorage from '@react-native-async-storage/async-storage'
 
 export default function App() {
   const [fontsLoaded] = useFonts({

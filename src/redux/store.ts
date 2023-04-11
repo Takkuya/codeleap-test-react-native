@@ -1,5 +1,5 @@
 import { configureStore } from '@reduxjs/toolkit'
-import itemsReducer from './itemsSlice'
+import postsReducer from './postsSlice'
 import userReducer from './userSlice'
 import { useSelector } from 'react-redux'
 import { TypedUseSelectorHook, useDispatch } from 'react-redux'
@@ -12,7 +12,7 @@ export const useAppSelector: TypedUseSelectorHook<RootState> = useSelector
 
 const store = configureStore({
   reducer: {
-    items: itemsReducer,
+    posts: postsReducer,
     user: userReducer
   }
 })

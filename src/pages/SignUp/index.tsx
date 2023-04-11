@@ -18,28 +18,33 @@ import {
 
 export const SignUp = () => {
   const navigation = useNavigation<StackNavigationProp<ParamListBase>>()
+  const dispatch = useAppDispatch()
+
   const [username, setUsername] = useState('')
 
   const isUsernameEmpty = username.trim().length < 1
 
-  async function getUsernameFromStorage() {
-    const username = await AsyncStorage.getItem('username')
+  async function getUsernameFromAsyncStorage() {
+    const username = await AsyncStorage.getItem(
+      '@codeleap-react-native-takkuya-username'
+    )
     if (username) {
       navigation.navigate('Home')
     }
   }
 
-  const dispatch = useAppDispatch()
-
-  async function handleUsername() {
+  async function handleCreateUsername() {
     dispatch(getUsername(username.trim()))
-    await AsyncStorage.setItem('username', username.trim())
+    await AsyncStorage.setItem(
+      '@codeleap-react-native-takkuya-username',
+      username.trim()
+    )
     navigation.navigate('Home')
     setUsername('')
   }
 
   useEffect(() => {
-    getUsernameFromStorage()
+    getUsernameFromAsyncStorage()
   }, [])
 
   return (
@@ -63,7 +68,7 @@ export const SignUp = () => {
             <Button
               type={'default'}
               variant={'primary'}
-              onPress={handleUsername}
+              onPress={handleCreateUsername}
               disabled={isUsernameEmpty}
             >
               ENTER

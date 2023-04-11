@@ -4,21 +4,21 @@ import { useAppSelector } from '../../redux/store'
 import { Container, NoMorePostsContainer, Paragraph } from './styles'
 
 type InfiniteScrollLoading = {
-  itemsLength: number
+  postsLength: number
   loading: boolean
 }
 
 export const InfiniteScrollLoading = ({
-  itemsLength,
+  postsLength,
   loading
 }: InfiniteScrollLoading) => {
-  const postsCount = useAppSelector((store) => store.items.postsCount)
+  const totalPostsCount = useAppSelector((store) => store.posts.totalPostsCount)
 
   if (loading) {
     return <View />
   }
 
-  if (itemsLength === postsCount) {
+  if (postsLength >= totalPostsCount) {
     return (
       <NoMorePostsContainer>
         <Paragraph>There is no more posts :c</Paragraph>

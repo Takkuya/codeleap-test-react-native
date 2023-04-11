@@ -1,23 +1,23 @@
-import { deleteItems } from '../../actions/ItemsActions/delete'
-import { getCardItems } from '../../redux/itemsSlice'
+import { deletePost } from '../../actions/PostsActions/delete'
+import { getPostData } from '../../redux/postsSlice'
 import { useAppDispatch } from '../../redux/store'
 import { Button } from '../Button'
 import { CustomModal } from '../Modal'
 import { FooterModal } from './styles'
 
-type DeleteItemModalProps = {
-  itemId: string
+type DeletePostModalProps = {
+  postId: string
   isOpen: boolean
   setIsOpen: React.Dispatch<React.SetStateAction<boolean>>
   toggleIsModalOpen: () => void
 }
 
-export const DeleteItemModal = ({
-  itemId,
+export const DeletePostModal = ({
+  postId,
   isOpen,
   setIsOpen,
   toggleIsModalOpen
-}: DeleteItemModalProps) => {
+}: DeletePostModalProps) => {
   const dispatch = useAppDispatch()
 
   function handleIsModalOpen() {
@@ -25,8 +25,8 @@ export const DeleteItemModal = ({
   }
 
   async function handleDeleteItem() {
-    await deleteItems({ itemId })
-    await dispatch(getCardItems())
+    await deletePost({ postId })
+    await dispatch(getPostData())
   }
 
   return (

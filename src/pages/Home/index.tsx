@@ -18,46 +18,54 @@ import { useEffect } from 'react'
 import { InfiniteScrollLoading } from '../../components/InfiniteScrollLoading'
 import { useAppDispatch, useAppSelector } from '../../redux/store'
 import { Loading } from '../../components/Loading'
-import { getCardItems, loadCardItems } from '../../redux/itemsSlice'
+import {
+  getPostData,
+  loadPostDataWhenInfiniteScroll
+} from '../../redux/postsSlice'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 
 export const Home = () => {
+  const navigation = useNavigation<StackNavigationProp<ParamListBase>>()
   const dispatch = useAppDispatch()
 
-  const items = useAppSelector((store) => store.items.value)
-  const loading = useAppSelector((store) => store.items.loading)
+  const posts = useAppSelector((store) => store.posts.value)
+  const loading = useAppSelector((store) => store.posts.loading)
+  const totalPostsCount = useAppSelector((store) => store.posts.totalPostsCount)
+
+  const isPostsCountGreaterThanTotalPostsCount = posts.length > totalPostsCount
+
+  console.log('posts.length', posts.length)
+  console.log('totalPostsCount', totalPostsCount)
 
   const [isPostsLoading, setIsPostsLoading] = useState(false)
   const [refreshing, setRefreshing] = useState(false)
   const postsLoadingRef = useRef(false)
 
-  const navigation = useNavigation<StackNavigationProp<ParamListBase>>()
-
   const listPosts = useCallback(async () => {
-    if (postsLoadingRef.current) {
+    if (postsLoadingRef.current || isPostsCountGreaterThanTotalPostsCount) {
       return
     }
 
     postsLoadingRef.current = true
     setIsPostsLoading(true)
-    dispatch(loadCardItems(items.length))
+    dispatch(loadPostDataWhenInfiniteScroll(posts.length))
     postsLoadingRef.current = false
     setIsPostsLoading(false)
-  }, [items.length])
+  }, [posts.length])
 
   async function getPostsPullToRefresh() {
     setRefreshing(true)
-    await dispatch(getCardItems())
+    dispatch(getPostData())
     setRefreshing(false)
   }
 
-  async function removeUserFromStorage() {
-    await AsyncStorage.removeItem('username')
+  async function handleLogout() {
+    await AsyncStorage.removeItem('@codeleap-react-native-takkuya-username')
     navigation.navigate('SignUp')
   }
 
   useEffect(() => {
-    listPosts()
+    getPostsPullToRefresh()
   }, [])
 
   if (loading == true) {
@@ -80,23 +88,17 @@ export const Home = () => {
                 name="log-out"
                 size={24}
                 color={'white'}
-                onPress={removeUserFromStorage}
+                onPress={handleLogout}
               />
             </LogoutButton>
           </IconWrapper>
         </Header>
         <Body
-          data={items}
+          data={posts}
           keyboardShouldPersistTaps="handled"
-          getItem={(data, index) => data[index]}
-          getItemCount={(data) => data.length}
+          onEndReached={listPosts}
+          onEndReachedThreshold={0.1}
           keyExtractor={(item: any) => String(item.id)}
-          refreshControl={
-            <RefreshControl
-              refreshing={refreshing}
-              onRefresh={getPostsPullToRefresh}
-            />
-          }
           renderItem={({ item }: { item: any }) => (
             <PostCard
               id={item.id}
@@ -106,11 +108,15 @@ export const Home = () => {
               content={item.content}
             />
           )}
-          onEndReached={listPosts}
-          onEndReachedThreshold={0.1}
+          refreshControl={
+            <RefreshControl
+              refreshing={refreshing}
+              onRefresh={getPostsPullToRefresh}
+            />
+          }
           ListFooterComponent={
             <InfiniteScrollLoading
-              itemsLength={items.length}
+              postsLength={posts.length}
               loading={isPostsLoading}
             />
           }

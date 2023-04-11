@@ -12,10 +12,9 @@ import {
 } from './styles'
 import { useEffect, useState } from 'react'
 import { Icon } from '../Icon'
-import { DeleteItemModal } from '../DeleteItemModal'
-import { EditItemModal } from '../EditItemModal'
+import { DeletePostModal } from '../DeletePostModal'
+import { EditPostModal } from '../EditIPostModal'
 import { TimesPassed } from '../../utils/TimesPassed'
-import { useAppSelector } from '../../redux/store'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { ParamListBase, useNavigation } from '@react-navigation/native'
 import { StackNavigationProp } from '@react-navigation/stack'
@@ -40,18 +39,20 @@ export const PostCard = ({
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false)
   const [isEditModalOpen, setIsEditModalOpen] = useState(false)
 
-  const [usernameStorage, setUsernameStorage] = useState('')
+  const [usernameAsyncStorage, setUsernameAsyncStorage] = useState('')
 
   async function getUsernameFromStorage() {
-    const username = await AsyncStorage.getItem('username')
-    if (!username) {
+    const usernameFromAsyncStorage = await AsyncStorage.getItem(
+      '@codeleap-react-native-takkuya-username'
+    )
+    if (!usernameFromAsyncStorage) {
       navigation.navigate('SignUp')
     } else {
-      setUsernameStorage(username)
+      setUsernameAsyncStorage(usernameFromAsyncStorage)
     }
   }
 
-  const isUserTheAuthor = usernameStorage === username
+  const isUserTheAuthor = usernameAsyncStorage === username
 
   function handleIsDeleteOpenModal() {
     setIsDeleteModalOpen(!isDeleteModalOpen)
@@ -99,17 +100,17 @@ export const PostCard = ({
         </Content>
       </PostCardContainer>
 
-      <DeleteItemModal
-        itemId={id}
+      <DeletePostModal
+        postId={id}
         isOpen={isDeleteModalOpen}
         setIsOpen={setIsDeleteModalOpen}
         toggleIsModalOpen={handleIsDeleteOpenModal}
       />
 
-      <EditItemModal
-        itemId={id}
-        itemTitle={title}
-        itemContent={content}
+      <EditPostModal
+        postId={id}
+        postTitle={title}
+        postContent={content}
         isOpen={isEditModalOpen}
         setIsOpen={setIsEditModalOpen}
         toggleIsModalOpen={handleIsEditOpenModal}

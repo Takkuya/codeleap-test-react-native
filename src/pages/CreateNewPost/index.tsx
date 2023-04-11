@@ -10,7 +10,7 @@ import {
 } from './styles'
 import { useAppDispatch } from '../../redux/store'
 import { useState } from 'react'
-import { postCardItems } from '../../redux/itemsSlice'
+import { createPostData } from '../../redux/postsSlice'
 import { ParamListBase, useNavigation } from '@react-navigation/native'
 import { StackNavigationProp } from '@react-navigation/stack'
 import AsyncStorage from '@react-native-async-storage/async-storage'
@@ -25,18 +25,20 @@ export const CreateNewPost = () => {
   const navigation = useNavigation<StackNavigationProp<ParamListBase>>()
   const dispatch = useAppDispatch()
 
-  async function handleCreateNewItem() {
-    const username = await AsyncStorage.getItem('username')
+  async function handleCreateNewPost() {
+    const username = await AsyncStorage.getItem(
+      '@codeleap-react-native-takkuya-username'
+    )
 
     if (!username) {
       return navigation.navigate('SignUp')
     }
 
     dispatch(
-      postCardItems({
-        itemUsername: username,
-        itemTitle: cardTitle.trim(),
-        itemContent: cardContent.trim()
+      createPostData({
+        postUsername: username,
+        postTitle: cardTitle.trim(),
+        postContent: cardContent.trim()
       })
     )
     setCardTitle('')
@@ -45,7 +47,7 @@ export const CreateNewPost = () => {
   }
 
   return (
-    <CreateNewPostContainer>
+    <CreateNewPostContainer keyboardShouldPersistTaps={'handled'}>
       <Header>
         <Title>What’s on your mind?</Title>
       </Header>
@@ -74,7 +76,7 @@ export const CreateNewPost = () => {
         <Button
           type={'default'}
           variant={'primary'}
-          onPress={handleCreateNewItem}
+          onPress={handleCreateNewPost}
           disabled={isCardTitleEmpty || isCardContentEmpty}
         >
           Create
