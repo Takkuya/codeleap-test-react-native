@@ -6,7 +6,7 @@ import { createPost } from '../actions/PostsActions/post'
 import { AppDispatch } from './store'
 
 type IValue = {
-  id: number
+  id: string
   username: string
   created_datetime: string
   title: string

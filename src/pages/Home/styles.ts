@@ -1,5 +1,13 @@
-import { Pressable } from 'react-native'
+import { FlatList, FlatListProps, Pressable } from 'react-native'
 import styled from 'styled-components/native'
+
+type PostType = {
+  id: string
+  username: string
+  created_datetime: string
+  title: string
+  content: string
+}
 
 export const HomeContainer = styled.View`
   background: ${(props) => props.theme.colors.white};
@@ -33,7 +41,9 @@ export const LogoutButton = styled(Pressable).attrs((props) => ({
   border-radius: 6px;
 `
 
-export const Body = styled.FlatList`
+export const Body = styled(
+  FlatList as new (props: FlatListProps<PostType>) => FlatList<PostType>
+).attrs({})`
   gap: 24px;
   height: 100%;
   flex: 1;

@@ -1,7 +1,7 @@
 import { api } from '../../lib/axios'
 
 type PostType = {
-  id: number
+  id: string
   username: string
   created_datetime: string
   title: string

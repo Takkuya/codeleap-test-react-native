@@ -1,13 +1,15 @@
 import styled from 'styled-components/native'
 import { Dimensions } from 'react-native'
 const screenHeight = Dimensions.get('screen').height
-const maxHeight = screenHeight - 200
+const screeHeightCalc = screenHeight < 800 ? 120 : 280
+const maxHeight = screenHeight - screeHeightCalc
+
+console.log('screenHeight', screeHeightCalc)
 
 export const ModalContainer = styled.View`
-  background: ${(props) => props.theme.colors.white};
   border-radius: 16px;
-  margin-bottom: 100px;
   max-height: ${maxHeight}px;
+  background: ${(props) => props.theme.colors.white};
 `
 
 export const Header = styled.View`

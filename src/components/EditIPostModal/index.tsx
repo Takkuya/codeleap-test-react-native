@@ -1,6 +1,5 @@
 import { useState } from 'react'
-import { View } from 'react-native'
-import { ScrollView } from 'react-native-gesture-handler'
+import { ScrollView, View } from 'react-native'
 import { editPost } from '../../actions/PostsActions/edit'
 import { getPostData } from '../../redux/postsSlice'
 import { useAppDispatch } from '../../redux/store'
@@ -8,6 +7,7 @@ import { Button } from '../Button'
 import { CustomModal } from '../Modal'
 import { TextInput } from '../TextInput'
 import { BodyModal, FooterModal } from './styles'
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 
 type EditPostModalProps = {
   postId: string
@@ -56,7 +56,11 @@ export const EditPostModal = ({
       isModalOpen={isOpen}
       setIsModalOpen={handleIsModalEditModalOpen}
     >
-      <ScrollView keyboardShouldPersistTaps={'handled'}>
+      <KeyboardAwareScrollView
+        scrollEnabled
+        enableOnAndroid
+        keyboardShouldPersistTaps={'handled'}
+      >
         <BodyModal>
           <View>
             <TextInput
@@ -80,25 +84,25 @@ export const EditPostModal = ({
             />
           </View>
         </BodyModal>
-      </ScrollView>
 
-      <FooterModal>
-        <Button
-          type={'outline'}
-          variant={'primary'}
-          onPress={handleIsModalEditModalOpen}
-        >
-          Cancel
-        </Button>
-        <Button
-          type={'default'}
-          variant={'success'}
-          onPress={handleEditPost}
-          disabled={isCardTitleEmpty || isCardContentEmpty}
-        >
-          Save
-        </Button>
-      </FooterModal>
+        <FooterModal>
+          <Button
+            type={'outline'}
+            variant={'primary'}
+            onPress={handleIsModalEditModalOpen}
+          >
+            Cancel
+          </Button>
+          <Button
+            type={'default'}
+            variant={'success'}
+            onPress={handleEditPost}
+            disabled={isCardTitleEmpty || isCardContentEmpty}
+          >
+            Save
+          </Button>
+        </FooterModal>
+      </KeyboardAwareScrollView>
     </CustomModal>
   )
 }

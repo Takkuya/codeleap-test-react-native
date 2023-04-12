@@ -95,10 +95,10 @@ export const Home = () => {
           keyboardShouldPersistTaps="handled"
           onEndReached={listPosts}
           onEndReachedThreshold={0.1}
-          keyExtractor={(item: any) => String(item.id)}
-          renderItem={({ item }: { item: any }) => (
+          keyExtractor={(item) => String(item.id)}
+          renderItem={({ item }) => (
             <PostCard
-              id={item.id}
+              id={String(item.id)}
               title={item.title}
               username={item.username}
               created_datetime={item.created_datetime}
