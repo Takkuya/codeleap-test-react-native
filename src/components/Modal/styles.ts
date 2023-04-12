@@ -6,7 +6,7 @@ const maxHeight = screenHeight - 200
 export const ModalContainer = styled.View`
   background: ${(props) => props.theme.colors.white};
   border-radius: 16px;
-  margin: 50px 0;
+  margin-bottom: 100px;
   max-height: ${maxHeight}px;
 `
 

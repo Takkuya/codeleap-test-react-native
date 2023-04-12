@@ -1,4 +1,4 @@
-import { Dimensions, View } from 'react-native'
+import { Dimensions, KeyboardAvoidingView, View } from 'react-native'
 import Modal from 'react-native-modal'
 import { Header, IconWrapper, ModalContainer, Title } from './styles'
 import { Icon } from '../Icon'
@@ -27,21 +27,27 @@ export const CustomModal = ({
         statusBarTranslucent
         deviceHeight={Dimensions.get('screen').height}
       >
-        <ModalContainer>
-          <Header>
-            <Title>{title}</Title>
-            <IconWrapper onPress={handleIsModalOpen}>
-              <Icon
-                name="x"
-                size={24}
-                color="text-base"
-                onPress={handleIsModalOpen}
-              />
-            </IconWrapper>
-          </Header>
+        <KeyboardAvoidingView
+          behavior="padding"
+          enabled
+          style={{ paddingBottom: 100 }}
+        >
+          <ModalContainer>
+            <Header>
+              <Title>{title}</Title>
+              <IconWrapper onPress={handleIsModalOpen}>
+                <Icon
+                  name="x"
+                  size={24}
+                  color="text-base"
+                  onPress={handleIsModalOpen}
+                />
+              </IconWrapper>
+            </Header>
 
-          {children}
-        </ModalContainer>
+            {children}
+          </ModalContainer>
+        </KeyboardAvoidingView>
       </Modal>
     </View>
   )
