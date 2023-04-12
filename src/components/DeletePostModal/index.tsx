@@ -8,20 +8,20 @@ import { FooterModal } from './styles'
 type DeletePostModalProps = {
   postId: string
   isOpen: boolean
-  setIsOpen: React.Dispatch<React.SetStateAction<boolean>>
-  toggleIsModalOpen: () => void
+  setIsDeleteModalOpen: React.Dispatch<React.SetStateAction<boolean>>
+  toggleIsDeleteModalOpen: () => void
 }
 
 export const DeletePostModal = ({
   postId,
   isOpen,
-  setIsOpen,
-  toggleIsModalOpen
+  setIsDeleteModalOpen,
+  toggleIsDeleteModalOpen
 }: DeletePostModalProps) => {
   const dispatch = useAppDispatch()
 
-  function handleIsModalOpen() {
-    toggleIsModalOpen()
+  function handleIsDeleteModalOpen() {
+    toggleIsDeleteModalOpen()
   }
 
   async function handleDeleteItem() {
@@ -33,13 +33,13 @@ export const DeletePostModal = ({
     <CustomModal
       title="Are you sure you want to delete this item?"
       isModalOpen={isOpen}
-      setIsModalOpen={setIsOpen}
+      setIsModalOpen={setIsDeleteModalOpen}
     >
       <FooterModal>
         <Button
           type={'outline'}
           variant={'primary'}
-          onPress={handleIsModalOpen}
+          onPress={handleIsDeleteModalOpen}
         >
           Cancel
         </Button>

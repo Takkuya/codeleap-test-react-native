@@ -34,9 +34,6 @@ export const Home = () => {
 
   const isPostsCountGreaterThanTotalPostsCount = posts.length > totalPostsCount
 
-  console.log('posts.length', posts.length)
-  console.log('totalPostsCount', totalPostsCount)
-
   const [isPostsLoading, setIsPostsLoading] = useState(false)
   const [refreshing, setRefreshing] = useState(false)
   const postsLoadingRef = useRef(false)

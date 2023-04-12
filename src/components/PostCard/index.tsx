@@ -103,8 +103,8 @@ export const PostCard = ({
       <DeletePostModal
         postId={id}
         isOpen={isDeleteModalOpen}
-        setIsOpen={setIsDeleteModalOpen}
-        toggleIsModalOpen={handleIsDeleteOpenModal}
+        setIsDeleteModalOpen={setIsDeleteModalOpen}
+        toggleIsDeleteModalOpen={handleIsDeleteOpenModal}
       />
 
       <EditPostModal
@@ -112,8 +112,8 @@ export const PostCard = ({
         postTitle={title}
         postContent={content}
         isOpen={isEditModalOpen}
-        setIsOpen={setIsEditModalOpen}
-        toggleIsModalOpen={handleIsEditOpenModal}
+        setIsEditModalOpen={setIsEditModalOpen}
+        toggleIsEditModalOpen={handleIsEditOpenModal}
       />
     </>
   )

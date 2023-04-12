@@ -21,7 +21,12 @@ export const CustomModal = ({
 
   return (
     <View>
-      <Modal isVisible={isModalOpen} onBackdropPress={handleIsModalOpen}>
+      <Modal
+        isVisible={isModalOpen}
+        onBackdropPress={handleIsModalOpen}
+        // statusBarTranslucent
+        // deviceHeight={Dimensions.get('screen').height}
+      >
         <ModalContainer>
           <Header>
             <Title>{title}</Title>

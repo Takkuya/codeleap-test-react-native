@@ -14,8 +14,8 @@ type EditPostModalProps = {
   postTitle: string
   postContent: string
   isOpen: boolean
-  setIsOpen: React.Dispatch<React.SetStateAction<boolean>>
-  toggleIsModalOpen: () => void
+  setIsEditModalOpen: React.Dispatch<React.SetStateAction<boolean>>
+  toggleIsEditModalOpen: () => void
 }
 
 export const EditPostModal = ({
@@ -23,8 +23,8 @@ export const EditPostModal = ({
   postTitle,
   postContent,
   isOpen,
-  setIsOpen,
-  toggleIsModalOpen
+  setIsEditModalOpen,
+  toggleIsEditModalOpen
 }: EditPostModalProps) => {
   const dispatch = useAppDispatch()
 
@@ -41,14 +41,20 @@ export const EditPostModal = ({
       postContent: cardContent.trim()
     })
     await dispatch(getPostData())
-    setIsOpen(false)
+    setIsEditModalOpen(false)
+  }
+
+  function handleIsModalEditModalOpen() {
+    setCardTitle(postTitle)
+    setCardContent(postContent)
+    toggleIsEditModalOpen()
   }
 
   return (
     <CustomModal
       title="Edit item"
       isModalOpen={isOpen}
-      setIsModalOpen={setIsOpen}
+      setIsModalOpen={handleIsModalEditModalOpen}
     >
       <ScrollView keyboardShouldPersistTaps={'handled'}>
         <BodyModal>
@@ -80,7 +86,7 @@ export const EditPostModal = ({
         <Button
           type={'outline'}
           variant={'primary'}
-          onPress={toggleIsModalOpen}
+          onPress={handleIsModalEditModalOpen}
         >
           Cancel
         </Button>

@@ -35,7 +35,12 @@ export const postsSlice = createSlice({
       state.loading = false
     },
     loadPostsWhenInfiniteScroll: (state, action) => {
-      state.value = [...state.value, ...action.payload.responseResults]
+      const newValue = [...state.value, ...action.payload.responseResults]
+
+      state.value = newValue.filter(
+        (item, index, self) =>
+          index === self.findIndex((post) => post.id === item.id)
+      )
       state.totalPostsCount = action.payload?.responseCount
       state.loading = false
     },
@@ -56,6 +61,7 @@ export const getPostData = () => async (dispatch: AppDispatch) => {
 export const loadPostDataWhenInfiniteScroll =
   (offset: number) => async (dispatch: AppDispatch) => {
     const posts = await getPostsInfiniteScroll(offset)
+
     dispatch(loadPostsWhenInfiniteScroll(posts))
   }
 

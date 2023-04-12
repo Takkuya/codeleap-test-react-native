@@ -5,13 +5,14 @@ export const SignUpContainer = styled.View`
   background: ${(props) => props.theme.colors.gray100};
   justify-content: center;
   align-items: center;
+  padding: 20px;
 `
 
 export const Content = styled.View`
   background: ${(props) => props.theme.colors.white};
-  padding: 20px;
   border-radius: 16px;
   gap: 16px;
+  padding: 18px;
 `
 
 export const Header = styled.View``
