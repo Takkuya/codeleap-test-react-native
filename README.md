@@ -18,6 +18,8 @@ To install and run the app, follow these steps:
 1. Clone the repository
 2. Install dependencies with `npm install`
 3. Run the app with `expo start`
+---
+Or you can use the **expo go** app and scan the **QR Code** in this [link](https://expo.dev/@takkuya/codeleap-test-react-native)
 
 ## 💡 Features
 
