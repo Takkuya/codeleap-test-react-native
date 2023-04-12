@@ -1,4 +1,4 @@
-import { View } from 'react-native'
+import { Dimensions, View } from 'react-native'
 import Modal from 'react-native-modal'
 import { Header, IconWrapper, ModalContainer, Title } from './styles'
 import { Icon } from '../Icon'
@@ -24,8 +24,8 @@ export const CustomModal = ({
       <Modal
         isVisible={isModalOpen}
         onBackdropPress={handleIsModalOpen}
-        // statusBarTranslucent
-        // deviceHeight={Dimensions.get('screen').height}
+        statusBarTranslucent
+        deviceHeight={Dimensions.get('screen').height}
       >
         <ModalContainer>
           <Header>
